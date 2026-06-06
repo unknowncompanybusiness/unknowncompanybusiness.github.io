@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Do the snapper</title>
+<style>
+  :root {
+    --red: #e8392b;
+    --red-glow: rgba(232, 57, 43, 0.45);
+    --bg: #0a0707;
+    --card: rgba(18, 13, 13, 0.72);
+    --text: #f2eeee;
+    --text-dim: #9a8f8f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  .bg {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center 30%, rgba(232, 57, 43, 0.12) 0%, transparent 60%);
+    z-index: -1;
+  }
+
+  .wrap {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px 32px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: 36px 28px 32px;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .icon {
+    font-size: 52px;
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    text-shadow: 0 0 24px var(--red-glow);
+  }
+
+  .sub {
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding: 16px 30px;
+    border-radius: 999px;
+    background: var(--red);
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    box-shadow: 0 8px 30px var(--red-glow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .dl-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px var(--red-glow);
+  }
+  .dl-btn svg { width: 22px; height: 22px; fill: #fff; }
+
+  .size {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  footer {
+    margin-top: 26px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="icon">🐊</div>
+    <h1>DO THE SNAPPER</h1>
+    <div class="sub">FL Studio Project</div>
+    <a class="dl-btn" href="https://github.com/unknowncompanybusiness/unknowncompanybusiness.github.io/releases/download/dothesnapper/Do.the.snapper.zip">
+      <svg viewBox="0 0 24 24"><path d="M12 16.5l-6-6 1.41-1.41L11 12.67V3h2v9.67l3.59-3.58L18 10.5l-6 6zM5 19h14v2H5v-2z"/></svg>
+      Download ZIP
+    </a>
+    <div class="size">829 MB</div>
+  </div>
+
+  <footer>© 2026 Unknown Company</footer>
+</div>
+
+</body>
+</html>
