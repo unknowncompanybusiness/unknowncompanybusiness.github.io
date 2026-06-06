@@ -223,6 +223,15 @@
     transform: translateY(-2px);
   }
   .platform svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .platform.soundcloud {
+    border-color: rgba(255, 85, 0, 0.45);
+    background: rgba(255, 85, 0, 0.08);
+  }
+  .platform.soundcloud:hover {
+    background: rgba(255, 85, 0, 0.15);
+    border-color: rgba(255, 85, 0, 0.7);
+  }
+  .platform.soundcloud .action { background: #FF5500; box-shadow: 0 4px 18px rgba(255, 85, 0, 0.4); }
   .platform.spotify {
     border-color: rgba(29, 185, 84, 0.45);
     background: rgba(29, 185, 84, 0.09);
@@ -301,9 +310,19 @@
     </div>
 
     <div class="platforms">
+      <a class="platform soundcloud" href="https://on.soundcloud.com/MhHBNdbYXkBtJo4XdP" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#FF5500"><path d="M23.999 14.165c-.052 1.796-1.612 3.169-3.4 3.169h-8.18a.68.68 0 0 1-.675-.683V7.862a.747.747 0 0 1 .452-.724s.75-.513 2.333-.513a5.364 5.364 0 0 1 2.763.755 5.433 5.433 0 0 1 2.57 3.54c.282-.08.574-.121.868-.12.884 0 1.73.358 2.347.992.617.634.948 1.49.922 2.373zM10.721 8.421c.247 2.98.427 5.697 0 8.672a.264.264 0 0 1-.53 0c-.395-2.946-.22-5.718 0-8.672a.264.264 0 0 1 .53 0zM9.072 9.448c.285 2.659.37 4.986-.006 7.655a.277.277 0 0 1-.55 0c-.331-2.63-.256-5.02 0-7.655a.277.277 0 0 1 .556 0zM7.376 9.076c.302 2.77.413 5.224.006 8.01a.262.262 0 0 1-.522 0c-.378-2.74-.27-5.273 0-8.01a.261.261 0 0 1 .516 0zM5.708 9.917c.314 2.455.395 4.671-.006 7.156a.257.257 0 0 1-.512 0c-.355-2.45-.267-4.738-.006-7.156a.264.264 0 0 1 .524 0zM4.044 10.41c.337 2.099.43 4.064-.006 6.156a.247.247 0 0 1-.488 0c-.378-2.063-.302-4.087-.006-6.157a.25.25 0 0 1 .5 0zM2.39 10.806c.355 1.802.398 3.4-.011 5.197a.241.241 0 0 1-.477 0c-.343-1.773-.295-3.42 0-5.197a.244.244 0 0 1 .488 0zM.732 11.563c.374 1.39.343 2.546-.012 3.936a.231.231 0 0 1-.453 0c-.32-1.368-.279-2.578 0-3.948a.235.235 0 0 1 .465.012z"/></svg>
+        SoundCloud
+        <span class="action">Listen</span>
+      </a>
       <a class="platform spotify" href="https://open.spotify.com/track/1Q7prnNFNL0Yo4comA4Elv?si=11aadc72ed3a461a" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="#1DB954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 1 1-.33-1.46c4.57-1.05 8.5-.6 11.66 1.34.35.21.46.67.25 1.03zm1.47-3.26a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.56-11.97-1.4a.94.94 0 1 1-.55-1.79c4.37-1.33 9.79-.69 13.5 1.6.44.27.58.85.31 1.28zm.13-3.4C15.24 8.34 8.84 8.13 5.15 9.25a1.12 1.12 0 1 1-.65-2.15C8.73 5.82 15.78 6.07 20.23 8.7a1.12 1.12 0 1 1-1.14 1.94z"/></svg>
         Spotify
+        <span class="action">Listen</span>
+      </a>
+      <a class="platform youtube" href="https://music.youtube.com/watch?v=lOhR1xfpfcI&si=Wdur_weEiMQNr9i3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+        YouTube Music
         <span class="action">Listen</span>
       </a>
       <a class="platform soon">
@@ -315,11 +334,6 @@
         <svg viewBox="0 0 24 24" fill="#A238FF"><path d="M18.77 4.94h5.18v3.02h-5.18V4.94zm0 3.78h5.18v3.02h-5.18V8.72zm0 3.78h5.18v3.02h-5.18V12.5zm-6.26-3.78h5.18v3.02h-5.18V8.72zm0 3.78h5.18v3.02h-5.18V12.5zm-6.25 0h5.17v3.02H6.26V12.5zm-6.26 0h5.18v3.02H0V12.5zm12.51 3.78h5.18v3.02h-5.18v-3.02zm-6.25 0h5.17v3.02H6.26v-3.02zm-6.26 0h5.18v3.02H0v-3.02z"/></svg>
         Deezer
         <span class="action">Available soon</span>
-      </a>
-      <a class="platform youtube" href="https://music.youtube.com/watch?v=lOhR1xfpfcI&si=Wdur_weEiMQNr9i3" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
-        YouTube Music
-        <span class="action">Listen</span>
       </a>
     </div>
 
