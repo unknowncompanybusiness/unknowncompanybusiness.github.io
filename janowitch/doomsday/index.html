@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOOMSDAY — JANOWITCH | Out Now</title>
+<meta name="description" content="DOOMSDAY — the debut single by JANOWITCH. Out now — stream it everywhere.">
+<meta property="og:title" content="DOOMSDAY — JANOWITCH">
+<meta property="og:description" content="The debut single — out now.">
+<meta property="og:image" content="https://unknowncompany.de/janowitch/doomsday/assets/cover.jpg">
+<meta property="og:image:secure_url" content="https://unknowncompany.de/janowitch/doomsday/assets/cover.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="1200">
+<meta property="og:url" content="https://unknowncompany.de/janowitch/doomsday/">
+<meta property="og:type" content="music.song">
+<meta property="og:site_name" content="Unknown Company">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DOOMSDAY — JANOWITCH">
+<meta name="twitter:description" content="The debut single — out now.">
+<meta name="twitter:image" content="https://unknowncompany.de/janowitch/doomsday/assets/cover.jpg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+  @font-face {
+    font-family: "Nunito Sans";
+    src: url("assets/NunitoSans-Variable.woff2") format("woff2");
+    font-weight: 200 1000;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --red: #e8392b;
+    --red-glow: rgba(232, 57, 43, 0.45);
+    --bg: #0a0707;
+    --card: rgba(18, 13, 13, 0.72);
+    --text: #f2eeee;
+    --text-dim: #9a8f8f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Blurred cover as ambient background */
+  .bg {
+    position: fixed;
+    inset: -60px;
+    background: url("assets/cover.jpg") center / cover no-repeat;
+    filter: blur(50px) brightness(0.55) saturate(1.3);
+    z-index: -2;
+  }
+  .bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center 35%, transparent 0%, rgba(10,7,7,0.85) 100%);
+  }
+
+  .wrap {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px 32px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: 28px 28px 24px;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7);
+    animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- Cover + play button ---- */
+  .cover-box {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65), 0 0 60px var(--red-glow);
+  }
+  .cover-box img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.3s ease;
+  }
+  .cover-box:hover img { transform: scale(1.03); }
+  .cover-box.playing img { filter: brightness(0.75); }
+
+  .play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .cover-box:hover .play-btn,
+  .cover-box.playing .play-btn { opacity: 1; }
+  .play-btn .circle {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: rgba(10, 7, 7, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .cover-box:hover .circle { transform: scale(1.08); background: rgba(232, 57, 43, 0.85); border-color: transparent; }
+  .play-btn svg { width: 30px; height: 30px; fill: #fff; }
+  .play-btn .icon-pause { display: none; }
+  .cover-box.playing .icon-play { display: none; }
+  .cover-box.playing .icon-pause { display: block; }
+
+  /* progress bar under cover */
+  .progress {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .cover-box.playing .progress, .cover-box.paused .progress { opacity: 1; }
+  .progress .fill {
+    height: 100%;
+    width: 0%;
+    background: var(--red);
+    box-shadow: 0 0 12px var(--red-glow);
+  }
+
+  .preview-hint {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 12px;
+  }
+
+  /* ---- Titles ---- */
+  .meta { text-align: center; margin: 18px 0 6px; }
+  .meta h1 {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.32em;
+    margin-right: -0.32em; /* optical centering */
+    color: var(--red);
+    text-shadow: 0 0 24px var(--red-glow);
+  }
+  .meta h2 {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.42em;
+    margin-right: -0.42em;
+    color: var(--text);
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .badge {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .badge .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    margin-right: 7px;
+    vertical-align: 1px;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--red-glow); }
+    50%      { box-shadow: 0 0 0 6px transparent; }
+  }
+
+  /* ---- Platform buttons ---- */
+  .platforms { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .platform {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  .platform:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+  }
+  .platform svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .platform.soundcloud {
+    border-color: rgba(255, 85, 0, 0.45);
+    background: rgba(255, 85, 0, 0.08);
+  }
+  .platform.soundcloud:hover {
+    background: rgba(255, 85, 0, 0.15);
+    border-color: rgba(255, 85, 0, 0.7);
+  }
+  .platform.soundcloud .action { background: #FF5500; box-shadow: 0 4px 18px rgba(255, 85, 0, 0.4); }
+  .platform.spotify {
+    border-color: rgba(29, 185, 84, 0.45);
+    background: rgba(29, 185, 84, 0.09);
+  }
+  .platform.spotify:hover {
+    background: rgba(29, 185, 84, 0.16);
+    border-color: rgba(29, 185, 84, 0.7);
+  }
+  .platform.spotify .action { background: #1DB954; box-shadow: 0 4px 18px rgba(29, 185, 84, 0.4); }
+  .platform.youtube {
+    border-color: rgba(255, 0, 0, 0.45);
+    background: rgba(255, 0, 0, 0.08);
+  }
+  .platform.youtube:hover {
+    background: rgba(255, 0, 0, 0.15);
+    border-color: rgba(255, 0, 0, 0.7);
+  }
+  .platform.youtube .action { background: #FF0000; box-shadow: 0 4px 18px rgba(255, 0, 0, 0.4); }
+  .platform.soon { opacity: 0.45; pointer-events: none; cursor: default; }
+  .platform.soon .action {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    color: var(--text-dim);
+  }
+  .platform .action {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--red);
+    border-radius: 999px;
+    padding: 7px 14px;
+    box-shadow: 0 4px 18px var(--red-glow);
+  }
+
+  footer {
+    margin-top: 26px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 440px) {
+    .card { padding: 20px 18px 18px; border-radius: 20px; }
+    .meta h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="wrap">
+  <div class="card">
+
+    <div class="cover-box" id="coverBox" title="Play preview">
+      <img src="assets/cover.jpg" alt="DOOMSDAY — JANOWITCH cover art">
+      <div class="play-btn">
+        <div class="circle">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5.14v13.72c0 .8.87 1.3 1.56.88l10.54-6.86a1.05 1.05 0 0 0 0-1.76L9.56 4.26A1.04 1.04 0 0 0 8 5.14z"/></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+        </div>
+      </div>
+      <div class="progress"><div class="fill" id="progressFill"></div></div>
+    </div>
+    <div class="preview-hint">▶ Listen to preview</div>
+
+    <div class="meta">
+      <h1>DOOMSDAY</h1>
+      <h2>Janowitch</h2>
+      <div class="badge"><span class="dot"></span>Out now — Stream it</div>
+    </div>
+
+    <div class="platforms">
+      <a class="platform soundcloud" href="https://on.soundcloud.com/MhHBNdbYXkBtJo4XdP" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#FF5500"><path d="M23.999 14.165c-.052 1.796-1.612 3.169-3.4 3.169h-8.18a.68.68 0 0 1-.675-.683V7.862a.747.747 0 0 1 .452-.724s.75-.513 2.333-.513a5.364 5.364 0 0 1 2.763.755 5.433 5.433 0 0 1 2.57 3.54c.282-.08.574-.121.868-.12.884 0 1.73.358 2.347.992.617.634.948 1.49.922 2.373zM10.721 8.421c.247 2.98.427 5.697 0 8.672a.264.264 0 0 1-.53 0c-.395-2.946-.22-5.718 0-8.672a.264.264 0 0 1 .53 0zM9.072 9.448c.285 2.659.37 4.986-.006 7.655a.277.277 0 0 1-.55 0c-.331-2.63-.256-5.02 0-7.655a.277.277 0 0 1 .556 0zM7.376 9.076c.302 2.77.413 5.224.006 8.01a.262.262 0 0 1-.522 0c-.378-2.74-.27-5.273 0-8.01a.261.261 0 0 1 .516 0zM5.708 9.917c.314 2.455.395 4.671-.006 7.156a.257.257 0 0 1-.512 0c-.355-2.45-.267-4.738-.006-7.156a.264.264 0 0 1 .524 0zM4.044 10.41c.337 2.099.43 4.064-.006 6.156a.247.247 0 0 1-.488 0c-.378-2.063-.302-4.087-.006-6.157a.25.25 0 0 1 .5 0zM2.39 10.806c.355 1.802.398 3.4-.011 5.197a.241.241 0 0 1-.477 0c-.343-1.773-.295-3.42 0-5.197a.244.244 0 0 1 .488 0zM.732 11.563c.374 1.39.343 2.546-.012 3.936a.231.231 0 0 1-.453 0c-.32-1.368-.279-2.578 0-3.948a.235.235 0 0 1 .465.012z"/></svg>
+        SoundCloud
+        <span class="action">Listen</span>
+      </a>
+      <a class="platform spotify" href="https://open.spotify.com/track/1Q7prnNFNL0Yo4comA4Elv?si=11aadc72ed3a461a" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#1DB954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 1 1-.33-1.46c4.57-1.05 8.5-.6 11.66 1.34.35.21.46.67.25 1.03zm1.47-3.26a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.56-11.97-1.4a.94.94 0 1 1-.55-1.79c4.37-1.33 9.79-.69 13.5 1.6.44.27.58.85.31 1.28zm.13-3.4C15.24 8.34 8.84 8.13 5.15 9.25a1.12 1.12 0 1 1-.65-2.15C8.73 5.82 15.78 6.07 20.23 8.7a1.12 1.12 0 1 1-1.14 1.94z"/></svg>
+        Spotify
+        <span class="action">Listen</span>
+      </a>
+      <a class="platform youtube" href="https://music.youtube.com/watch?v=lOhR1xfpfcI&si=Wdur_weEiMQNr9i3" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#FF0000"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+        YouTube Music
+        <span class="action">Listen</span>
+      </a>
+      <a class="platform soon">
+        <svg viewBox="0 0 24 24" fill="#FA2D48"><path d="M23.97 6.55c0-.23 0-.46-.02-.7a10 10 0 0 0-.13-1.52 5.13 5.13 0 0 0-.48-1.45A4.9 4.9 0 0 0 21.2.74a5.1 5.1 0 0 0-1.45-.48c-.5-.09-1-.12-1.52-.14L17.52.1H6.45c-.23 0-.46 0-.7.02-.5.02-1.01.05-1.51.14A5.1 5.1 0 0 0 2.8.74 4.9 4.9 0 0 0 .65 2.88c-.23.46-.38.94-.47 1.45-.1.5-.13 1.01-.14 1.52L.02 6.55v10.9c0 .23 0 .46.02.7.01.5.05 1.01.14 1.52.09.5.24.98.47 1.44A4.9 4.9 0 0 0 2.8 23.26c.46.23.94.39 1.45.48.5.09 1 .12 1.51.14l.7.02h11.06l.7-.02c.51-.02 1.02-.05 1.52-.14a5.1 5.1 0 0 0 1.45-.48 4.9 4.9 0 0 0 2.14-2.15c.23-.46.39-.94.48-1.44.09-.51.12-1.02.13-1.53l.02-.69V6.55zm-6.43 8.03c0 .4-.04.8-.18 1.18a2.46 2.46 0 0 1-1.84 1.58c-.3.07-.62.1-.93.1-.83 0-1.54-.4-1.85-1.13a2.06 2.06 0 0 1 .49-2.32c.4-.38.9-.58 1.43-.69l1.08-.21c.26-.06.43-.2.46-.48V7.93c0-.3-.14-.4-.43-.35l-4.58.92c-.3.07-.4.2-.4.51v6.85c0 .41-.03.81-.18 1.2a2.45 2.45 0 0 1-1.83 1.56c-.31.07-.62.11-.94.11-.83 0-1.53-.42-1.84-1.14a2.07 2.07 0 0 1 .47-2.3c.4-.39.9-.59 1.44-.7l1.08-.22c.26-.05.43-.2.46-.47V6.74c0-.13.02-.25.05-.37.08-.27.28-.43.55-.5l1.06-.21 4.61-.93.94-.19c.27-.05.43.1.46.34l.02.26v9.44z"/></svg>
+        Apple Music
+        <span class="action">Available soon</span>
+      </a>
+      <a class="platform soon">
+        <svg viewBox="0 0 24 24" fill="#A238FF"><path d="M18.77 4.94h5.18v3.02h-5.18V4.94zm0 3.78h5.18v3.02h-5.18V8.72zm0 3.78h5.18v3.02h-5.18V12.5zm-6.26-3.78h5.18v3.02h-5.18V8.72zm0 3.78h5.18v3.02h-5.18V12.5zm-6.25 0h5.17v3.02H6.26V12.5zm-6.26 0h5.18v3.02H0V12.5zm12.51 3.78h5.18v3.02h-5.18v-3.02zm-6.25 0h5.17v3.02H6.26v-3.02zm-6.26 0h5.18v3.02H0v-3.02z"/></svg>
+        Deezer
+        <span class="action">Available soon</span>
+      </a>
+    </div>
+
+  </div>
+
+  <footer>© 2026 Janowitch</footer>
+</div>
+
+<script>
+  const audio = new Audio("assets/preview.mp3?v=2");
+  audio.preload = "auto";
+
+  const box = document.getElementById("coverBox");
+  const fill = document.getElementById("progressFill");
+
+  box.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      box.classList.add("playing");
+      box.classList.remove("paused");
+    } else {
+      audio.pause();
+      box.classList.remove("playing");
+      box.classList.add("paused");
+    }
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    if (audio.duration) {
+      fill.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+    }
+  });
+
+  audio.addEventListener("ended", () => {
+    box.classList.remove("playing", "paused");
+    fill.style.width = "0%";
+    audio.currentTime = 0;
+  });
+</script>
+
+</body>
+</html>
